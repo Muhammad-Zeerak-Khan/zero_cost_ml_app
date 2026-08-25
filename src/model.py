@@ -6,7 +6,6 @@ from PIL import Image
 from torchvision import models
 
 from src.logger import logger
-from src.metrics import INFERENCE_LATENCY
 
 
 class ImageClassifier:
@@ -33,7 +32,6 @@ class ImageClassifier:
         top_prob, top_catid = torch.topk(probabilities, 1)
 
         latency = time.time() - start_time
-        INFERENCE_LATENCY.observe(latency)
 
         class_name = self.labels[top_catid[0].item()]
         confidence = float(top_prob[0].item())
