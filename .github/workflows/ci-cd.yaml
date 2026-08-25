@@ -8,10 +8,12 @@ jobs:
   validate-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Bumped to v7 to natively support Node 24 and clear deprecation warnings
+      - uses: actions/checkout@v7
       
+      # Bumped to v7 to natively support Node 24
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.10'
           
@@ -22,7 +24,7 @@ jobs:
         run: ruff check src/ app.py
         
       - name: Run Pytest
-        run: pytest tests/ 
+        run: pytest tests/
 
       - name: Push code to Hugging Face Spaces
         env:
