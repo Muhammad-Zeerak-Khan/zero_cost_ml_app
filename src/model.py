@@ -19,7 +19,10 @@ class ImageClassifier:
         url = (
             "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
         )
-        self.labels = [line.strip() for line in urllib.request.urlopen(url)]
+        # decode("utf-8") converts bytes (b'nematode') into a standard string ('nematode')
+        with urllib.request.urlopen(url) as response:
+            self.labels = [line.decode("utf-8").strip() for line in response.readlines()]
+        # self.labels = [line.strip() for line in urllib.request.urlopen(url)]
 
     def predict(self, image: Image.Image) -> dict[str, float]:
         start_time = time.time()
