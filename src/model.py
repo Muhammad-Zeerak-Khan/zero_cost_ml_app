@@ -1,7 +1,7 @@
 import time
 import urllib.request
 
-import spaces
+import spaces  # Now imports cleanly since 'spaces' is in requirements.txt
 import torch
 from PIL import Image
 from torchvision import models
@@ -11,17 +11,13 @@ from src.logger import logger
 
 class ImageClassifier:
     def __init__(self) -> None:
-        logger.info(
-            "Initializing PyTorch EfficientNetV2-S Model for High-Accuracy Inference"
-        )
+        logger.info("Initializing PyTorch EfficientNetV2-S Model")
 
-        # Load state-of-the-art EfficientNetV2 Small weights
         weights = models.EfficientNet_V2_S_Weights.DEFAULT
         self.model = models.efficientnet_v2_s(weights=weights)
         self.model.eval()
         self.preprocess = weights.transforms()
 
-        # Hardware acceleration setup
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         logger.info(f"Model successfully mapped to device: {self.device}")
@@ -34,11 +30,10 @@ class ImageClassifier:
                 line.decode("utf-8").strip() for line in response.readlines()
             ]
 
-    @spaces.GPU  # Dynamically allocates the free ZeroGPU tier when requested
+    @spaces.GPU  # Delegates execution to the Hugging Face ZeroGPU cluster
     def predict(self, image: Image.Image) -> dict[str, float]:
         start_time = time.time()
 
-        # Move image tensor to the hardware accelerator device
         img_tensor = self.preprocess(image).unsqueeze(0).to(self.device)
 
         with torch.no_grad():
