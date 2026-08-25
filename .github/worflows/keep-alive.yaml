@@ -1,0 +1,9 @@
+name: Keep Space Awake
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -s https://huggingface.co/spaces/${{ secrets.HF_USERNAME }}/${{ secrets.HF_SPACE_NAME }} > /dev/null
