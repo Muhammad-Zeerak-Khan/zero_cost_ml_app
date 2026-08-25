@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Bumped to v7 to natively support Node 24 and clear deprecation warnings
+      # Set fetch-depth: 0 to fetch full history and prevent shallow push rejections
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       
       # Bumped to v7 to natively support Node 24
       - name: Set up Python
