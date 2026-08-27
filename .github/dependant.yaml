@@ -1,13 +1,13 @@
-version: 2
-updates:
-  # Automatically check for Python library updates
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+# version: 2
+# updates:
+#   # Automatically check for Python library updates
+#   - package-ecosystem: "pip"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"
       
-  # Automatically check for updates to the GitHub Actions we are using
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+#   # Automatically check for updates to the GitHub Actions we are using
+#   - package-ecosystem: "github-actions"
+#     directory: "/"
+#     schedule:
+#       interval: "weekly"

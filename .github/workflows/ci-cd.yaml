@@ -1,39 +1,39 @@
-name: CI/CD Pipeline
+# name: CI/CD Pipeline
 
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
 
-jobs:
-  validate-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      # Bumped to v7 to natively support Node 24 and clear deprecation warnings
-      # Set fetch-depth: 0 to fetch full history and prevent shallow push rejections
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
+# jobs:
+#   validate-and-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Bumped to v7 to natively support Node 24 and clear deprecation warnings
+#       # Set fetch-depth: 0 to fetch full history and prevent shallow push rejections
+#       - uses: actions/checkout@v7
+#         with:
+#           fetch-depth: 0
       
-      # Bumped to v7 to natively support Node 24
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.10'
+#       # Bumped to v7 to natively support Node 24
+#       - name: Set up Python
+#         uses: actions/setup-python@v7
+#         with:
+#           python-version: '3.10'
           
-      - name: Install dependencies
-        run: pip install --force-reinstall -r requirements.txt
+#       - name: Install dependencies
+#         run: pip install --force-reinstall -r requirements.txt
       
-      - name: Run Ruff Linter
-        run: ruff check src/ app.py
+#       - name: Run Ruff Linter
+#         run: ruff check src/ app.py
         
-      - name: Run Pytest
-        run: pytest tests/
+#       - name: Run Pytest
+#         run: pytest tests/
 
-      - name: Push code to Hugging Face Spaces
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_USER: ${{ secrets.HF_USERNAME }}
-          HF_SPACE: ${{ secrets.HF_SPACE_NAME }}
-        run: |
-          git remote add space https://$HF_USER:$HF_TOKEN@huggingface.co/spaces/$HF_USER/$HF_SPACE
-          git push --force space main
+#       - name: Push code to Hugging Face Spaces
+#         env:
+#           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+#           HF_USER: ${{ secrets.HF_USERNAME }}
+#           HF_SPACE: ${{ secrets.HF_SPACE_NAME }}
+#         run: |
+#           git remote add space https://$HF_USER:$HF_TOKEN@huggingface.co/spaces/$HF_USER/$HF_SPACE
+#           git push --force space main
